@@ -1,8 +1,95 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// função pra colocar um navio horizontal no tabuleiro
+void colocar_navio_horizontal(int x, int y, int tabuleiro[10][10]) {
+    // normalizando as coordenadas (se a coordenada for 1, passa pra 0 no tabuleiro)
+    x = x - 1;
+    y = y - 1;
+
+    // checando a coordenada x
+    if ((x + 3) > 10) {
+        printf("O navio não pode ser colocado fora do tabuleiro, seguindo com a coordenada x = 7\n");
+        x = 7;
+    }
+
+    // checando a coordenada y
+    if (y > 10) {
+        printf("O navio não pode ser colocado fora do tabuleiro, seguindo com a coordenada y = 10\n");
+        y = 10;
+    }
+
+    // colococando o navio no tabuleiro, imprime um erro caso o navio esteja sobrepondo outro
+    for (int i = x; i < (x + 3); i++) {
+        if (tabuleiro[y][i] == 3) {
+            printf("ERRO: Os navios se sobrepoem\n");
+            exit(1);
+        } else {
+            tabuleiro[y][i] = 3;
+        }
+    }
+}
+
+// função pra colocar um navio vertical no tabuleiro
+void colocar_navio_vertical(int x, int y, int tabuleiro[10][10]) {
+    // normalizando as coordenadas (se a coordenada for 1, passa pra 0 no tabuleiro)
+    x = x - 1;
+    y = y - 1;
+
+    // checando a coordenada x
+    if (x > 10) {
+        printf("O navio não pode ser colocado fora do tabuleiro, seguindo com a coordenada x = 10\n");
+        x = 10;
+    }
+
+    // checando a coordenada y
+    if ((y + 3) > 10) {
+        printf("O navio não pode ser colocado fora do tabuleiro, seguindo com a coordenada y = 7\n");
+        y = 7;
+    }
+
+    // colococando o navio no tabuleiro, imprime um erro caso o navio esteja sobrepondo outro
+    for (int i = x; i < (x + 3); i++) {
+        if (tabuleiro[i][x] == 3) {
+            printf("ERRO: Os navios se sobrepoem\n");
+            exit(1);
+        } else {
+            tabuleiro[i][x] = 3;
+        }
+    }
+}
+
+// função pra colocar um navio diagonal no tabuleiro
+void colocar_navio_diagonal(int x, int y, int tabuleiro[10][10]) {
+    // normalizando as coordenadas (se a coordenada for 1, passa pra 0 no tabuleiro)
+    x = x - 1;
+    y = y - 1;
+
+    // checando a coordenada x
+    if ((x + 3) > 10) {
+        printf("O navio não pode ser colocado fora do tabuleiro, seguindo com a coordenada x = 7\n");
+        x = 7;
+    }
+
+    // checando a coordenada y
+    if ((y + 3) > 10) {
+        printf("O navio não pode ser colocado fora do tabuleiro, seguindo com a coordenada y = 7\n");
+        y = 7;
+    }
+
+    // colococando o navio no tabuleiro, imprime um erro caso o navio esteja sobrepondo outro
+    for (int i = x; i < (x + 3); i++) {
+        if (tabuleiro[y + (i - x)][i] == 3) {
+            printf("ERRO: Os navios se sobrepoem\n");
+            exit(1);
+        } else {
+            tabuleiro[y + (i - x)][i] = 3;
+        }
+    }
+}
+
 int main() {
-    // definindo o tabuleiro
+    // definindo o tabuleiro 
     int tabuleiro[10][10] = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -16,56 +103,11 @@ int main() {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
 
-    // definindo dois navios
-    int navio_horizontal[3] = {3, 3, 3};
-    int navio_vertical[3] = {3, 3, 3};
-
-    // colocando os navios e checando se eles cabem no tabuleiro ou se estão se sobrepondo
-    // variáveis das coordenadas dos navios em (x, y)
-    int coordenadas_navio_horizontal[2] = {8, 8};
-    int coordenadas_navio_vertical[2] = {3, 2};
-
-    // checando as coordenadas horizontais do navio horizontal
-    if ((coordenadas_navio_horizontal[0] + 3) > 10) {
-        printf("O navio não pode ser colocado fora do tabuleiro, seguindo com a coordenada x = 7\n");
-        coordenadas_navio_horizontal[0] = 7;
-    }
-
-    // checando as coordenadas verticais do navio horizontal
-    if (coordenadas_navio_horizontal[1] > 10) {
-        printf("O navio não pode ser colocado fora do tabuleiro, seguindo com a coordenada y = 10\n");
-        coordenadas_navio_horizontal[1] = 10;
-    }
-
-    // colococando o navio horizontal no tabuleiro
-    for (int i = coordenadas_navio_horizontal[0]; i < (coordenadas_navio_horizontal[0] + 3); i++) {
-        tabuleiro[coordenadas_navio_horizontal[1]][i] = 3;
-    }
-
-    // checando as coordenadas horizontais do navio vertical
-    if (coordenadas_navio_vertical[0] > 10) {
-        printf("O navio não pode ser colocado fora do tabuleiro, seguindo com a coordenada x = 10\n");
-        coordenadas_navio_vertical[0] = 10;
-    }
-
-    // checando as coordenadas verticais do navio vertical
-    if ((coordenadas_navio_vertical[1] + 3) > 10) {
-        printf("O navio não pode ser colocado fora do tabuleiro, seguindo com a coordenada y = 7\n");
-        coordenadas_navio_vertical[1] = 7;
-    }
-
-    // checando se os navios se sobrepoem
-    for (int i = coordenadas_navio_vertical[1]; i < (coordenadas_navio_vertical[1] + 3); i++) {
-        if (tabuleiro[i][coordenadas_navio_vertical[0]] == 3) {
-            printf("ERRO: Os navios se sobrepoem\n");
-            exit(1);
-        }
-    }
-
-    // colococando o navio vertical no tabuleiro
-    for (int i = coordenadas_navio_vertical[1]; i < (coordenadas_navio_vertical[1] + 3); i++) {
-        tabuleiro[i][coordenadas_navio_vertical[0]] = 3;
-    }
+    // colocando os navios no tabuleiro
+    colocar_navio_horizontal(2, 3, tabuleiro);
+    colocar_navio_vertical(7, 9, tabuleiro);
+    colocar_navio_diagonal(3, 5, tabuleiro);
+    colocar_navio_diagonal(7, 2, tabuleiro);
 
     // imprimindo o tabuleiro montado
     for (int a = 0; a < 10; a++) {
