@@ -222,9 +222,9 @@ int main() {
     colocar_navio_diagonal(7, 2, tabuleiro);
 
     // colocar as habilidades
-    habilidade_cone(4, 1, tabuleiro);
+    habilidade_cone(3, 1, tabuleiro);
     habilidade_cruz(6, 6, tabuleiro);
-    habilidade_octaedro(2, 8, tabuleiro);
+    habilidade_octaedro(2, 7, tabuleiro);
 
     // imprimindo o tabuleiro montado
     for (int a = 0; a < 10; a++) {
